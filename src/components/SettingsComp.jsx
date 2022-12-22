@@ -8,7 +8,7 @@ const SettingsComp = () => {
         <div>
             <button onClick={() => setToggle(!toggle)} className="settings-button">Settings</button>
 
-            {toggle && <div className="filter">
+            {/* {toggle && <div className="filter">
                 <p>Dimensions and Metrics</p>
                 <button>Date</button>
                 <button>App</button>
@@ -19,7 +19,7 @@ const SettingsComp = () => {
                 <button>Revenue</button>
                 <button>Fill Rate</button>
                 <button>CTR</button>
-            </div>}
+            </div>} */}
         </div>
     )
 }
