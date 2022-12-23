@@ -1,17 +1,20 @@
 import Axios from "axios"
-import { useContext, useEffect, useMemo, useState } from "react";
+import { forwardRef, useContext, useEffect, useMemo, useRef, useState } from "react";
 import dateContext from "../context/dateContext";
 import format from 'date-fns/format'
 import { COLUMNS } from './columns'
-import { useTable, useSortBy, useFilters, usePagination } from "react-table";
+import { useTable, useSortBy, usePagination } from "react-table";
 import defaultData from './defaultData.json'
 import arrow from '../images/arrow.png'
 import down from '../images/down.png'
 import up from '../images/up.png'
+import settingContext from "../context/settingContext";
 
 const TableComp = () => {
 
     const [range, setRange] = useContext(dateContext);
+
+    const [settingsOpen, setSettingsOpen] = useContext(settingContext);
     
     const start = format(range[0].startDate, "yyyy-MM-dd");
     const end = format(range[0].endDate, "yyyy-MM-dd");
@@ -52,12 +55,42 @@ const TableComp = () => {
         state,
         setPageSize,
         prepareRow,
+        allColumns,
+        getToggleHideAllColumnsProps
     } = tableInstance;
 
     const { pageIndex, pageSize } = state;
 
+    const Checkbox = forwardRef(
+        ({ indeterminate, ...rest }, ref) => {
+          const defaultRef = useRef()
+          const resolvedRef = ref || defaultRef
+      
+          useEffect(() => {
+            resolvedRef.current.indeterminate = indeterminate
+          }, [resolvedRef, indeterminate])
+      
+          return <input type="checkbox" ref={resolvedRef} {...rest} />
+        }
+      )
+
     return (
         <>
+        <div className="container">
+            {settingsOpen && <div className="filter"> 
+            {
+                allColumns.map(column => (
+                    <div className="header" key = {column.id}>
+                        <label>
+                            {(column.id === "date" || column.id === "app_id") && <input className="exception" type="checkbox"/>}
+                            {(column.id !== "date" && column.id !== "app_id") && <input type="checkbox" {...column.getToggleHiddenProps()}/>}
+                            <span>{column.Header}</span>
+                        </label>
+                    </div>
+                ))
+            }
+            </div>}
+        </div>
         <table {...getTableProps()}>
             <thead>
                 {
@@ -92,24 +125,18 @@ const TableComp = () => {
                 }
             </tbody>
         </table>
-        <div>
+        <div className="pagination">
             <span>
                 Page{' '}
                 <strong>
                     {pageIndex + 1} of {pageOptions.length}
-                </strong>{' '}
+                </strong>{' '} {'|'}
             </span>
-            <span>
-                | Go to page: {' '}
-                <input type='number' defaultValue = {pageIndex + 1}
-                 onChange = {e => {
-                     const pageNumber = e.target.value ? Number(e.target.value - 1) : 0
-                     gotoPage(pageNumber)
-                 }}   
-                 style={{width: '50px'}}
-                />
-            </span>
-            <select value={pageSize} onChange={e => setPageSize(Number(e.target.value))}>
+            <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>{'<<'}</button>
+            <button onClick={() => previousPage()} disabled={!canPreviousPage}>Previous</button>
+            <button onClick={() => nextPage()} disabled={!canNextPage}>Next</button>
+            <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>{'>>'}</button>
+            <select className= "page-size" value={pageSize} onChange={e => setPageSize(Number(e.target.value))}>
                  {
                      [10, 25, 50].map(pageSize => (
                          <option key = {pageSize} value={pageSize}>
@@ -118,13 +145,9 @@ const TableComp = () => {
                      ))
                  }
             </select>
-            <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>{'<<'}</button>
-            <button onClick={() => previousPage()} disabled={!canPreviousPage}>Previous</button>
-            <button onClick={() => nextPage()} disabled={!canNextPage}>Next</button>
-            <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>{'>>'}</button>
         </div>
         </>
     )
 }
 
-export default TableComp
+export default TableComp;
