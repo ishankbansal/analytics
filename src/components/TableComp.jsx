@@ -56,7 +56,6 @@ const TableComp = () => {
         setPageSize,
         prepareRow,
         allColumns,
-        getToggleHideAllColumnsProps
     } = tableInstance;
 
     const { pageIndex, pageSize } = state;
@@ -72,7 +71,7 @@ const TableComp = () => {
       
           return <input type="checkbox" ref={resolvedRef} {...rest} />
         }
-      )
+        )
 
     return (
         <>
