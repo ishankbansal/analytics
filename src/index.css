@@ -3,27 +3,9 @@ body{
   font-family: Lato;
 }
 
-/* input.inputBox {
-  font-size: 15px;
-  padding: 5px 8px 4px 8px;
-  border-radius: 3px;
-  border: 1px solid #666;
+.heading{
+  margin-left: 25px;
 }
-
-.calendarWrap {
-  display: inline-block;
-  position: relative;
-  margin: 20px;
-}
-
-.calendarElement {
-  position: absolute;
-  left: 142%;
-  transform: translateX(-50%);
-  top: 40px;
-  border: 1px solid #ccc;
-  z-index: 999;
-} */
 
 input.inputBox {
   font: normal normal bold 16px/19px Lato;
@@ -35,20 +17,21 @@ input.inputBox {
   opacity: 1;
   border-radius: 4px;
   cursor: pointer;
+  margin-top: 33px;
 }
 
 .calendarWrap {
-  position: relative;
-  display: inline-block;
-  margin: 20px;
+  display: flex;
+  margin: 0 20px ;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .calendarElement {
   margin-top: 10px;
-  display: block;
+  align-self:flex-end;
   position: absolute;
   border: 1px solid #ccc;
-  z-index: 1;
   cursor: pointer;
 }
 
@@ -75,35 +58,64 @@ input.inputBox {
   margin: 20px;
   padding: 20px;
   padding-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 0;
 }
 
-.filter > button{
-  width: 205px;
-  height: 41px;
-  border: 1px solid #EAEAEA;
-  border-radius: 4px;
-  opacity: 1;
-  margin-right: 15px;
-  margin-bottom: 15px;
-  text-align: left;
-  font: normal normal normal 16px/19px Lato;
-  letter-spacing: 0.24px;
-  color: #1D1A1A;
-  background: none;
-  padding-left: 20px;
-  /* padding-left: 15px;
-  border-left: 5px solid #136FED; */
+
+.filter > input{
   cursor: pointer;
 }
 
-.filter > p{
-  font-family: Lato;
+.header{
+  margin: 4px;
+  border-radius: 4px;
+  border: 1px solid #EAEAEA;
+  overflow: hidden;
+  float: left;
+  height: 3.0em;
 }
+
+.header label {
+  float: left; 
+  line-height: 3.0em;
+  width: 205px; height: 40px;
+  
+}
+
+.header label span {
+  text-align: left;
+  padding: 3px 19px;
+  display: block;
+  cursor: pointer;
+}
+
+.header label input {
+  position: absolute;
+  display: none;
+  color: #fff !important;
+}
+
+input:checked + span{
+  border-left: 5px solid #136FED;
+}
+
+input + span{
+  border-left: 5px solid #fff;
+}
+
+.exception + span{
+  border-left: 5px solid #136FED;
+}
+
 
 table {
   font-family: Lato;
   border-collapse: collapse;
   width: 100%;
+  margin-top: 20px;
 }
 
 table td, table th {
@@ -113,16 +125,9 @@ table td, table th {
   font-size: 14px;
 }
 
-/* table tr:nth-child(even){background-color: #f2f2f2;}
-
-table tr:hover {background-color: #ddd;} */
-
-
 table th {
   padding-top: 12px;
   padding-bottom: 12px;
-  /* background-color: #04AA6D; */
-  /* color: white; */
 }
 
 table th > img{
@@ -130,4 +135,22 @@ table th > img{
   width: 15px;
   margin-left: 10px;
   text-align: left;
+}
+
+.pagination{
+  margin: 50px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.pagination > button{
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.page-size{
+  background: none;
 }
