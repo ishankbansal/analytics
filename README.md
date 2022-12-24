@@ -1,5 +1,10 @@
-- Analytics page with a REST API to fetch the data, features like Date Picker to call the API end point to fetch data, allows the user to enable/hide a particular column, also enables them to sort the data in ascending/decending order. Implemented reusable data cache layer and pagination as additional features.
-- UI part to be improved in the upcoming days, as of now I have implemented all the features :)
+- Analytics page with a REST API to fetch the data. 
+
+- Features:
+    - Date Picker to call the API end point to fetch data, 
+    - Allows the user to enable/hide a particular column, 
+    - Enables them to sort the data in ascending/decending order. 
+    - Implemented reusable data cache layer and pagination as additional features.
 
 - This is how the project looks like:
 
